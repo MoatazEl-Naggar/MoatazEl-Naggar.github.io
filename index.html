@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moataz Elnaggar — Arabic business software</title>
+<meta name="description" content="Clinic systems, ERPs, e-invoicing, distribution and publishing platforms built for businesses in Egypt and the Gulf. Every project opens as a working demo.">
+<meta property="og:title" content="Moataz Elnaggar — Arabic business software">
+<meta property="og:description" content="Clinic systems, ERPs, e-invoicing and distribution platforms. Try each one as a working demo.">
+<meta property="og:image" content="img/dewan-2.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #EEE8DC; --paper-2: #E4DCCB; --card: #F7F3EB; --ink: #1B1814; --ink-2: #4B453C; --muted: #7C7466;
+  --line: #CDC2AE; --accent: #0E5A48; --accent-ink: #F7F3EB; --hot: #D24A12; --shadow: 0 30px 60px -30px rgba(40, 30, 10, .35);
+  --serif: 'Gloock', Georgia, serif; --sans: 'Instrument Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --kufi: 'Reem Kufi', 'IBM Plex Sans Arabic', sans-serif; --arabic: 'IBM Plex Sans Arabic', sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #13120F; --paper-2: #1B1915; --card: #1E1C17; --ink: #EEE7D8; --ink-2: #C2B9A8; --muted: #8E8676;
+  --line: #322D25; --accent: #6CCBAE; --accent-ink: #10201B; --hot: #FF7B47; --shadow: 0 30px 60px -30px rgba(0, 0, 0, .7); color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --paper: #13120F; --paper-2: #1B1915; --card: #1E1C17; --ink: #EEE7D8; --ink-2: #C2B9A8; --muted: #8E8676;
+  --line: #322D25; --accent: #6CCBAE; --accent-ink: #10201B; --hot: #FF7B47; --shadow: 0 30px 60px -30px rgba(0, 0, 0, .7); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { /* paper grain */
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
+.wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
+.mono { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.ar { font-family: var(--arabic); direction: rtl; unicode-bidi: isolate; }
+:focus-visible { outline: 2px solid var(--hot); outline-offset: 3px; border-radius: 4px; }
+
+/* ── Top bar ── */
+.top { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 18px; height: 60px; }
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; }
+.mark i { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: var(--ink); color: var(--paper); font: 400 14px var(--serif); font-style: normal; letter-spacing: .02em; }
+.top nav { display: flex; gap: 4px; margin-inline-start: auto; }
+.top nav a { text-decoration: none; padding: 6px 12px; border-radius: 999px; font-size: 14px; color: var(--ink-2); }
+.top nav a:hover { background: var(--paper-2); color: var(--ink); }
+.clock { display: flex; align-items: center; gap: 8px; font: 12px var(--mono); color: var(--muted); white-space: nowrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #2FB67C; box-shadow: 0 0 0 0 rgba(47, 182, 124, .6); animation: ping 2.4s infinite; }
+@keyframes ping { 70% { box-shadow: 0 0 0 9px rgba(47, 182, 124, 0); } 100% { box-shadow: 0 0 0 0 rgba(47, 182, 124, 0); } }
+.icon-btn { all: unset; cursor: pointer; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); }
+.icon-btn:hover { background: var(--paper-2); }
+.icon-btn:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+
+/* ── Hero ── */
+.hero { position: relative; z-index: 2; padding: 64px 0 28px; }
+.hero h1 { font: 400 clamp(44px, 7.4vw, 104px)/.98 var(--serif); letter-spacing: -.02em; margin: 0; max-width: 13ch; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; }
+.hero p.lede { font-size: 18px; color: var(--ink-2); max-width: 46ch; margin: 22px 0 0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; border: 1px solid var(--ink); cursor: pointer; background: none; transition: transform .2s, background .2s, color .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn.solid { background: var(--ink); color: var(--paper); }
+.btn.solid:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.sector { border-inline-start: 1px solid var(--line); padding-inline-start: 28px; }
+.sector .word { font: 700 clamp(64px, 11vw, 150px)/1.15 var(--kufi); color: var(--hot); direction: rtl; height: 1.2em; overflow: hidden; position: relative; }
+.sector .word span { position: absolute; inset-inline: 0; transition: transform .7s cubic-bezier(.7, 0, .2, 1), opacity .7s; }
+.sector .word span.out { transform: translateY(-100%); opacity: 0; }
+.sector .word span.in { transform: translateY(100%); opacity: 0; }
+.sector .cap { font: 400 22px var(--serif); color: var(--ink-2); }
+.sector .cap b { font-weight: 400; color: var(--ink); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); margin-top: 56px; }
+.stats div { padding: 16px 16px 0 0; }
+.stats b { display: block; font: 400 clamp(36px, 5vw, 56px)/1 var(--serif); }
+.stats + .ticker { margin-top: 36px; }
+.ticker { border-block: 1px solid var(--line); overflow: hidden; white-space: nowrap; padding: 12px 0; position: relative; z-index: 2; }
+.ticker div { display: inline-flex; gap: 40px; animation: slide 46s linear infinite; padding-inline-start: 40px; }
+.ticker span { font: 13px var(--mono); color: var(--ink-2); text-transform: uppercase; letter-spacing: .06em; }
+.ticker span::before { content: '✦'; color: var(--hot); margin-inline-end: 40px; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* ── Work explorer ── */
+section { position: relative; z-index: 2; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; gap: 16px 28px; padding: 88px 0 24px; }
+.sec-head h2 { font: 400 clamp(36px, 5vw, 64px)/1 var(--serif); margin: 0; letter-spacing: -.01em; }
+.sec-head h2 sup { font: 500 14px var(--mono); color: var(--hot); vertical-align: top; margin-inline-start: 6px; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-inline-start: auto; }
+.chip { all: unset; cursor: pointer; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); font-size: 13.5px; color: var(--ink-2); transition: .2s; }
+.chip:hover { border-color: var(--ink); color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chip:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+.chip small { font-family: var(--mono); opacity: .6; margin-inline-start: 4px; }
+.explorer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 40px; align-items: start; }
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.list li { border-bottom: 1px solid var(--line); transition: opacity .3s; }
+.list li.hide { display: none; }
+.row { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: grid; grid-template-columns: 54px 1fr auto; gap: 4px 14px; align-items: baseline; padding: 18px 8px; position: relative; transition: padding .35s cubic-bezier(.2, .8, .2, 1); }
+.row::before { content: ''; position: absolute; inset: 0; background: var(--card); transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.2, .8, .2, 1); z-index: -1; }
+.row[aria-current="true"]::before { transform: scaleX(1); }
+.row[aria-current="true"] { padding-inline-start: 18px; }
+.row:focus-visible { outline: 2px solid var(--hot); outline-offset: -2px; }
+.row .n { font: 500 15px var(--kufi); color: var(--muted); }
+.row[aria-current="true"] .n { color: var(--hot); }
+.row .t { font: 400 26px/1.15 var(--serif); }
+.row .a { grid-column: 2; font-size: 14px; color: var(--muted); }
+.row .tag { grid-row: 1; grid-column: 3; display: flex; gap: 6px; align-items: center; }
+.row .thumb { display: none; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 500 11.5px var(--mono); text-transform: uppercase; letter-spacing: .04em; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); white-space: nowrap; }
+.pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+.pill.live::before { background: #2FB67C; } .pill.wip::before { background: #E3A325; } .pill.built::before { background: var(--accent); }
+.pill.play { border-color: var(--hot); color: var(--hot); } .pill.play::before { display: none; }
+.stage { position: sticky; top: 84px; }
+.frame { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); transform: perspective(1400px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)); transition: transform .4s ease-out; }
+.bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); font: 12px var(--mono); color: var(--muted); }
+.bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.bar span { margin-inline-start: 10px; }
+.screen { position: relative; aspect-ratio: 16 / 10; background: var(--paper-2); overflow: hidden; }
+.screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity .6s, transform 6s linear; transform: scale(1.04); }
+.screen img.on { opacity: 1; transform: scale(1); }
+.screen img.phone { object-fit: contain; padding: 14px 0; }
+.progress { display: flex; gap: 4px; padding: 10px 14px; }
+.progress i { flex: 1; height: 3px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.progress i b { display: block; height: 100%; width: 0; background: var(--ink); }
+.progress i.done b { width: 100%; }
+.progress i.run b { animation: fill var(--dur, 2.8s) linear forwards; }
+@keyframes fill { to { width: 100%; } }
+.stage-foot { display: flex; gap: 18px; align-items: start; justify-content: space-between; padding-top: 18px; }
+.stage-foot p { margin: 0; color: var(--ink-2); max-width: 44ch; }
+.stage-foot .cap { font: 12px var(--mono); color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* ── Process ── */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--ink); counter-reset: s; }
+.step { padding: 22px 22px 28px 0; border-inline-end: 1px solid var(--line); margin-inline-end: 22px; }
+.step:last-child { border: 0; margin: 0; }
+.step b { display: block; font: 700 40px var(--kufi); color: var(--hot); line-height: 1; margin-bottom: 14px; }
+.step h3 { font: 400 24px/1.15 var(--serif); margin: 0 0 8px; }
+.step p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+/* ── Also built ── */
+.more { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.mini { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; transition: transform .3s, border-color .3s; }
+.mini:hover { transform: translateY(-4px) rotate(-.4deg); border-color: var(--ink); }
+.mini h4 { margin: 0; font: 400 22px var(--serif); }
+.mini p { margin: 0; font-size: 14.5px; color: var(--ink-2); flex: 1; }
+.stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.stack span { font: 11.5px var(--mono); padding: 3px 7px; border-radius: 6px; background: var(--paper-2); color: var(--ink-2); }
+
+/* ── Contact ── */
+.contact { margin-top: 110px; background: var(--ink); color: var(--paper); padding: 80px 0 40px; position: relative; z-index: 2; overflow: hidden; }
+.contact h2 { font: 400 clamp(48px, 9vw, 132px)/.95 var(--serif); margin: 0; letter-spacing: -.02em; }
+.contact h2 em { font-style: normal; color: var(--hot); }
+.contact .ar-big { position: absolute; inset-inline-end: -20px; top: 10px; font: 700 clamp(120px, 22vw, 320px)/1 var(--kufi); color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--paper) 13%, transparent); pointer-events: none; direction: rtl; }
+.contact .row2 { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; position: relative; }
+.contact .btn { border-color: var(--paper); color: var(--paper); }
+.contact .btn.solid { background: var(--hot); border-color: var(--hot); color: #1B1814; }
+.contact .btn.solid:hover { background: var(--paper); border-color: var(--paper); }
+.contact .fine { margin-top: 70px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font: 12px var(--mono); color: color-mix(in srgb, var(--paper) 55%, transparent); border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent); padding-top: 18px; }
+.toast { position: fixed; z-index: 100; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; visibility: hidden; background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 999px; font-size: 14px; transition: transform .35s, opacity .35s, visibility .35s; }
+.toast.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+
+/* ── Project view ── */
+dialog.case { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--paper); color: var(--ink); }
+dialog.case[open] { display: flex; flex-direction: column; animation: up .45s cubic-bezier(.2, .8, .2, 1); }
+dialog.case::backdrop { background: rgba(0, 0, 0, .4); }
+@keyframes up { from { transform: translateY(40px); opacity: 0; } }
+.case-top { display: flex; align-items: center; gap: 14px; padding: 12px 20px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.case-top h2 { margin: 0; font: 400 26px/1.1 var(--serif); }
+.case-top .ar { color: var(--muted); font-size: 14px; }
+.case-top .grow { flex: 1; }
+.case-tabs { display: flex; gap: 2px; background: var(--paper-2); border-radius: 999px; padding: 3px; }
+.case-tabs button { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 999px; font-size: 14px; color: var(--ink-2); }
+.case-tabs button[aria-selected="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, .12); }
+.case-tabs button:focus-visible { outline: 2px solid var(--hot); }
+.case-body { flex: 1; min-height: 0; position: relative; }
+.pane { position: absolute; inset: 0; overflow: auto; }
+.pane[hidden] { display: none; }
+.demo-pane { display: flex; flex-direction: column; }
+.demo-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 20px; border-bottom: 1px solid var(--line); background: var(--card); }
+.demo-tools .lbl { font: 12px var(--mono); color: var(--muted); text-transform: uppercase; margin-inline-end: 4px; }
+.role { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); font-size: 14px; font-weight: 500; transition: .2s; }
+.role:hover { border-color: var(--ink); }
+.role[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.role:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+.demo-tools .note { font-size: 13px; color: var(--muted); margin-inline-start: auto; }
+.demo-tools a, .demo-tools .ghost { all: unset; cursor: pointer; font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px; color: var(--ink-2); }
+.demo-frame { flex: 1; position: relative; background: var(--paper-2); }
+.demo-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; font: 13px var(--mono); color: var(--muted); }
+.shots-pane { padding: 24px 20px 40px; }
+.shots-main { max-width: 1100px; margin: 0 auto; }
+.shots-main .frame { transform: none; }
+.shots-main .screen { aspect-ratio: auto; height: min(68vh, 680px); }
+.shots-main .screen img { object-fit: contain; transform: none; }
+.shots-nav { display: flex; align-items: center; gap: 12px; margin: 14px auto 0; max-width: 1100px; }
+.shots-nav .cap { flex: 1; font: 400 20px var(--serif); }
+.thumbs { display: flex; gap: 8px; overflow-x: auto; padding: 14px 0 4px; max-width: 1100px; margin: 0 auto; }
+.thumbs button { all: unset; cursor: pointer; flex: 0 0 120px; height: 76px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; opacity: .6; transition: .2s; background: var(--paper-2); }
+.thumbs button img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.thumbs button[aria-current="true"] { border-color: var(--hot); opacity: 1; }
+.thumbs button:focus-visible { outline: 2px solid var(--hot); }
+.about-pane { padding: 40px 20px 60px; }
+.about { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; }
+.about .summary { font: 400 26px/1.35 var(--serif); margin: 0; }
+.about ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
+.about li { padding: 12px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 34px 1fr; color: var(--ink-2); }
+.about li b { font: 700 15px var(--kufi); color: var(--hot); }
+.about h3 { font: 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 30px 0 10px; }
+
+/* ── Reveal on scroll ── */
+.rv { opacity: 0; transform: translateY(24px); transition: opacity .8s, transform .8s cubic-bezier(.2, .8, .2, 1); }
+.rv.seen { opacity: 1; transform: none; }
+
+@media (max-width: 960px) {
+  .hero-grid, .explorer, .about { grid-template-columns: minmax(0, 1fr); }
+  .row .tag { flex-wrap: wrap; }
+  .sector { border: 0; padding: 0; }
+  .stage { display: none; }
+  .row { grid-template-columns: 40px 1fr; }
+  .row .tag { grid-row: auto; grid-column: 2; }
+  .row .thumb { display: block; grid-column: 1 / -1; margin-top: 12px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 10; }
+  .row .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .step:nth-child(2) { border: 0; margin: 0; }
+  .top nav, .clock span.long { display: none; }
+  .demo-tools .note { display: none; }
+}
+@media (max-width: 560px) {
+  .steps { grid-template-columns: 1fr; }
+  .step { border: 0; margin: 0; border-bottom: 1px solid var(--line); }
+  .case-top { padding: 10px 16px; }
+  .case-top h2 { font-size: 21px; }
+  .case-top .ar { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rv { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#"><i aria-hidden="true">ME</i>Moataz Elnaggar</a>
+    <nav aria-label="Sections"><a href="#work">Work</a><a href="#process">Process</a><a href="#more">Also built</a><a href="#contact">Contact</a></nav>
+    <div class="clock"><i class="dot" aria-hidden="true"></i><span class="long">Cairo</span> <span id="clock">--:--</span><span class="long">· taking new projects</span></div>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch light or dark theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="mono">Software engineer · Egypt &amp; the Gulf</span>
+          <h1 style="margin-top:14px">Software that runs <em>real</em> businesses, in Arabic.</h1>
+          <p class="lede">I design, build and deploy complete systems: the screens your team uses every day, the accounting and stock behind them, and the server they run on. Open any project below and use it yourself.</p>
+          <div class="cta-row">
+            <a class="btn solid" href="#work">Try the live demos ↓</a>
+            <a class="btn" href="https://wa.me/201006622203" target="_blank" rel="noopener">WhatsApp me</a>
+          </div>
+        </div>
+        <div class="sector" aria-live="polite">
+          <span class="mono">Built for</span>
+          <div class="word" id="word"></div>
+          <div class="cap" id="wordCap"></div>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+  </section>
+  <div class="ticker" aria-hidden="true"><div id="ticker"></div></div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Selected work<sup id="workCount"></sup></h2>
+        <div class="filters" id="filters" role="group" aria-label="Filter by field"></div>
+      </div>
+      <div class="explorer">
+        <ol class="list" id="list"></ol>
+        <div class="stage" id="stage" aria-hidden="true">
+          <div class="frame" id="frame">
+            <div class="bar"><i></i><i></i><i></i><span id="stageUrl"></span></div>
+            <div class="screen" id="stageScreen"></div>
+            <div class="progress" id="stageProg"></div>
+          </div>
+          <div class="stage-foot">
+            <div><p id="stageWhat"></p><div class="cap" id="stageCap"></div></div>
+            <span class="pill play" id="stageOpen">Click to open</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-head"><h2>How a project goes</h2></div>
+      <div class="steps rv">
+        <div class="step"><b>١</b><h3>We talk it through</h3><p>You show me how the work runs today: the paper, the Excel sheets, the WhatsApp groups. I come back with what the system should do.</p></div>
+        <div class="step"><b>٢</b><h3>You see it early</h3><p>Real screens with your own data within days, so changes happen before they are expensive.</p></div>
+        <div class="step"><b>٣</b><h3>Built and deployed</h3><p>Accounts, stock, roles, printing and backups, set up on a server or in the cloud and ready for your team.</p></div>
+        <div class="step"><b>٤</b><h3>I stay on it</h3><p>Training for your staff, fixes, and new features as the business grows.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="more">
+    <div class="wrap">
+      <div class="sec-head"><h2>Also built</h2><span class="mono">Services and products in progress · no public screens yet</span></div>
+      <div class="more" id="moreGrid"></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="ar-big" aria-hidden="true">يلا نبدأ</div>
+    <div class="wrap">
+      <span class="mono" style="color:inherit;opacity:.6">Have a system in mind?</span>
+      <h2>Let’s build <em>yours</em> next.</h2>
+      <div class="row2">
+        <a class="btn solid" href="https://wa.me/201006622203" target="_blank" rel="noopener">WhatsApp · +20 100 662 2203</a>
+        <button class="btn" type="button" id="copyMail">moataz.elnaggar01@gmail.com <span aria-hidden="true">⧉</span></button>
+      </div>
+      <div class="fine"><span>Client systems are shown on demo data, without their live addresses.</span><span>© <span id="yr"></span> Moataz Elnaggar</span></div>
+    </div>
+  </section>
+</main>
+
+<dialog class="case" id="case" aria-labelledby="caseTitle">
+  <div class="case-top">
+    <button class="icon-btn" type="button" id="caseClose" aria-label="Close project">✕</button>
+    <div><h2 id="caseTitle"></h2><span class="ar" id="caseAr"></span></div>
+    <span class="grow"></span>
+    <div class="case-tabs" role="tablist" id="caseTabs"></div>
+    <button class="icon-btn" type="button" id="casePrev" aria-label="Previous project">←</button>
+    <span class="mono" id="caseNum" dir="ltr"></span>
+    <button class="icon-btn" type="button" id="caseNext" aria-label="Next project">→</button>
+  </div>
+  <div class="case-body">
+    <div class="pane demo-pane" id="pane-demo" role="tabpanel" hidden>
+      <div class="demo-tools">
+        <span class="lbl" id="roleLbl">View as</span><span id="roles" style="display:contents"></span>
+        <button class="ghost" type="button" id="demoReset">Reset</button>
+        <a id="demoFull" target="_blank" rel="noopener">Full screen ↗</a>
+        <span class="note">Runs in your browser on demo data. Nothing is saved.</span>
+      </div>
+      <div class="demo-frame" id="demoFrame"><div class="loading">Loading the demo…</div></div>
+    </div>
+    <div class="pane shots-pane" id="pane-shots" role="tabpanel" hidden>
+      <div class="shots-main"><div class="frame"><div class="bar"><i></i><i></i><i></i><span id="shotUrl"></span></div><div class="screen" id="shotScreen"></div></div></div>
+      <div class="shots-nav"><button class="icon-btn" type="button" id="shotPrev" aria-label="Previous screen">←</button><span class="cap" id="shotCap"></span><span class="mono" id="shotNum"></span><button class="icon-btn" type="button" id="shotNext" aria-label="Next screen">→</button></div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+    <div class="pane about-pane" id="pane-about" role="tabpanel" hidden>
+      <div class="about" id="about"></div>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const FIELDS = {
+  health: 'Healthcare',
+  finance: 'Finance & ERP',
+  sales: 'Sales & distribution',
+  content: 'Publishing',
+  data: 'Data & learning',
+};
+
+// Featured work, with screenshots (img/<id>-<n>.jpg; "-m" = phone).
+const PROJECTS = [
+  {
+    id: 'clinic', name: 'Clinic Management System', ar: 'عيادتك — نظام إدارة العيادات', field: 'health', year: '2026',
+    status: ['live', 'In use · sold per clinic'], url: 'clinic-system / dashboard',
+    what: 'Online booking, reception and medical records for clinics of any specialty.',
+    summary: 'Started as the booking site of one dental clinic and grew into a full clinic system that is now installed per clinic under its own name, colors and domain. Patients book online, reception runs the day, and doctors keep complete medical records.',
+    points: [
+      'Online booking with the nearest free slot, for patients on their phone',
+      'Reception timeline for several doctors, check-in, drag to reschedule',
+      'Cash invoices, receipts, daily cash close, doctor commissions',
+      'Medical records with allergy alerts, visit mode and A5 prescriptions',
+      'Works for every specialty, with per-doctor presets and a dental chart',
+    ],
+    stack: ['React', 'Vite', 'Tailwind', 'Node.js', 'Express', 'MongoDB', 'PWA'],
+    shots: [
+      ['clinic-1', "Doctor's morning dashboard"], ['clinic-2', 'Reception timeline, three doctors'], ['clinic-3', 'Visit mode with specialty quick picks'],
+      ['clinic-4', 'Printed A5 prescription'], ['clinic-5', 'Accounts and doctor commissions'], ['clinic-m1', 'Patient booking on a phone', true],
+    ],
+  },
+  {
+    id: 'dewan', name: 'Dewan', ar: 'ديوان — نظام ERP للحسابات والمخازن', field: 'finance', year: '2026',
+    status: ['live', 'In use'], url: 'dewan / dashboard',
+    what: 'Accounting and inventory ERP for trading and distribution companies in Egypt.',
+    summary: 'An Arabic accounting and warehouse system for distributors. Sales and purchase invoices post their own journal entries, stock and cash stay in sync, and van sales reps get their own load, sell and settle cycle.',
+    points: [
+      'Sales, purchases and returns that post their journal entries automatically',
+      'Warehouses, transfers with approval, stock adjustments and damage',
+      'Van sales: load the vehicle, sell, return and settle per rep',
+      'Cash and cheque vouchers, cheque due dates, treasuries',
+      'Trial balance, income statement, balance sheet and statements, exportable to Excel',
+    ],
+    stack: ['React', 'Vite', 'Tailwind', 'Express', 'Prisma', 'PostgreSQL'],
+    shots: [
+      ['dewan-1', 'Launch campaign artwork'], ['dewan-2', 'Dashboard'], ['dewan-3', 'Sales invoices'], ['dewan-4', 'Invoice with its automatic journal entry'],
+      ['dewan-5', 'Van sales rep, daily summary'], ['dewan-6', 'Income statement'], ['dewan-7', 'Items and prices'],
+    ],
+  },
+  {
+    id: 'einvoice', name: 'Diwan Fatoora', ar: 'ديوان فوترة — فوترة إلكترونية', field: 'finance', year: '2026',
+    status: ['wip', 'Testing with ZATCA sandbox'], url: 'fatoora / invoices',
+    what: 'Multi-tenant e-invoicing for Saudi ZATCA Phase 2 (FATOORA).',
+    summary: 'A SaaS that lets small Saudi businesses issue tax invoices that ZATCA accepts. The signing, hashing, QR codes and clearance live in a separate engine, checked against the official ZATCA SDK, behind a simple Arabic-first web app.',
+    points: [
+      'Standard and simplified tax invoices with QR codes, cleared or reported to ZATCA',
+      'Device onboarding with OTP, signed XML and invoice hash chain',
+      'Customers, suppliers, products, purchases and tax reports',
+      'Share an invoice by WhatsApp, email or link; phone-friendly layout',
+      'Background submission worker, retries and webhooks for integrations',
+    ],
+    stack: ['Next.js', 'Express', 'Prisma', 'PostgreSQL', 'Redis', 'BullMQ', 'Docker'],
+    shots: [
+      ['einv-1', 'Invoices'], ['einv-2', 'Tax invoice with QR and ZATCA status'], ['einv-3', 'New invoice'], ['einv-4', 'Reports and VAT due'],
+      ['einv-5', 'Business onboarding'], ['einv-6', 'Purchases'], ['einv-m1', 'Invoices on a phone', true], ['einv-m2', 'Invoice sharing on a phone', true],
+    ],
+  },
+  {
+    id: 'blogify', name: 'Blogify Pro', ar: 'منصة مدونات ومجلات', field: 'content', year: '2026',
+    status: ['built', 'Product'], url: 'blogify / home',
+    what: 'A ready-to-brand blog and magazine platform with its own CMS.',
+    summary: 'A publishing platform sold to site owners who want a modern magazine without a developer. Arabic or English, dark or light, and every color, font, section and feature changes from the dashboard.',
+    points: [
+      'Homepage builder: hero slider, trending ticker, reviews, lists, ad slots',
+      'News, reviews with scores and specs, articles and priced lists',
+      'Rich editor with revisions, scheduling and an SEO checklist',
+      'Themes, fonts and corner styles with a live preview',
+      'Comments, newsletter, analytics, RSS, sitemap and structured data',
+    ],
+    stack: ['Next.js', 'Tailwind', 'shadcn/ui', 'Prisma', 'MySQL', 'TipTap'],
+    shots: [
+      ['blogify-1', 'Home, dark theme'], ['blogify-2', 'Review page'], ['blogify-3', 'Home, light theme'], ['blogify-4', 'Admin dashboard'],
+      ['blogify-5', 'Content list'], ['blogify-6', 'Site settings'], ['blogify-m1', 'Home on a phone', true],
+    ],
+  },
+  {
+    id: 'hardware', name: 'Tech Passion', ar: 'هاردوير عربي — أخبار ومراجعات', field: 'content', year: '2026',
+    status: ['live', 'Live · client site'], url: 'tech-passion / home',
+    what: 'Arabic hardware news, reviews and PC build guides, with a custom CMS.',
+    summary: 'A right-to-left tech magazine for a client, built on the same engine as Blogify Pro and shaped around hardware: review scores, spec tables, build guides with parts lists, and a live news feed.',
+    points: [
+      'Reviews with scores, pros and cons and spec tables',
+      'PC build guides with component lists',
+      'Breaking news bar, weather and external news widgets',
+      'Media library with automatic WebP versions',
+    ],
+    stack: ['Next.js', 'Tailwind', 'Prisma', 'MySQL', 'Nginx', 'PM2'],
+    shots: [
+      ['hw-1', 'Home'], ['hw-2', 'Cooler review'], ['hw-3', 'PC build guide with parts table'], ['hw-4', 'Latest news'], ['hw-m1', 'Home on a phone', true],
+    ],
+  },
+  {
+    id: 'reptracker', name: 'RepTracker', ar: 'متابعة المندوبين', field: 'sales', year: '2026',
+    status: ['live', 'In use · client'], url: 'reptracker / admin',
+    what: 'Field sales and van distribution: a rep mobile app and a live web admin.',
+    summary: 'Sales reps work from a mobile app that keeps going offline and syncs when back online. Managers follow them on a live map, check visits and performance, and the whole system stays in sync with the company ERP on SQL Server.',
+    points: [
+      'Rep app with offline sync, visits, orders and GPS check-ins',
+      'Live map of reps in the field over WebSockets',
+      'Customers, branches, managers and rep routes',
+      'Rep performance by day and branch',
+      'Two-way sync service with the existing SQL Server ERP',
+    ],
+    stack: ['Expo', 'React Native', 'React', 'Express', 'Socket.IO', 'Prisma', 'PostgreSQL', 'SQL Server'],
+    shots: [
+      ['rep-1', 'Admin dashboard'], ['rep-2', 'Live map'], ['rep-3', 'Customers'], ['rep-4', 'Rep performance'], ['rep-5', 'Sign in'],
+    ],
+  },
+  {
+    id: 'erp', name: 'Import ERP', ar: 'نظام إدارة الاستيراد', field: 'finance', year: '2026',
+    status: ['live', 'In use · client'], url: 'erp / dashboard',
+    what: 'Import and purchasing ERP: shipments, containers, receiving and payments.',
+    summary: 'Built for an importing company to follow goods from the supplier to the warehouse. Purchase invoices are entered by carton, shipments and containers are tracked, and every payment and receipt goes through vouchers and treasuries.',
+    points: [
+      'Purchase invoices by carton, with item photos and registration',
+      'Shipments and containers, receiving into stock',
+      'Suppliers, customers, currencies and treasuries',
+      'Payment and receipt vouchers with a review step',
+    ],
+    stack: ['React', 'Vite', 'Express', 'Prisma', 'PostgreSQL'],
+    shots: [['erp-1', 'Dashboard'], ['erp-2', 'Shipments'], ['erp-3', 'Purchase invoice']],
+  },
+  {
+    id: 'mobile-reports', name: 'Mobile ERP Reports', ar: 'تقارير الحسابات على الموبايل', field: 'finance', year: '2026',
+    status: ['wip', 'In development'], url: 'reports / stock balances',
+    what: 'Eight desktop ERP reports on phones, read-only, on screen and in print.',
+    summary: 'A read-only phone app that brings an existing desktop ERP’s reports to managers on the move. All accounting stays in the original SQL Server; the app shows each report as readable cards and prints the exact desktop layout to A4.',
+    points: [
+      'Stock balances, net sales and purchases, income statement',
+      'Price lists, treasury and customer statements, market debt',
+      'One data payload, two renderers: phone cards and A4 print',
+      'No accounting math in the app: numbers come from SQL only',
+    ],
+    stack: ['Expo', 'React Native', 'Express', 'TypeScript', 'SQL Server'],
+    shots: [['mobrpt-m1', 'Stock balances screen design', true], ['mobrpt-1', 'A4 print layout']],
+  },
+  {
+    id: 'b2b', name: 'Distributor Ordering Portal', ar: 'منصة طلبات الموزع', field: 'sales', year: '2026',
+    status: ['built', 'Built'], url: 'b2b / admin',
+    what: 'B2B ordering: shops order from their distributor online.',
+    summary: 'Retail shops sign up, get approved, browse the distributor’s catalog and place orders. The distributor manages products, brands and categories and moves each order through review, preparation and delivery.',
+    points: [
+      'Shop accounts with approval before ordering',
+      'Catalog, cart and order history for shops',
+      'Order pipeline: review, preparing, delivered',
+      'Products, brands, categories and customers for the admin',
+    ],
+    stack: ['React', 'Vite', 'Tailwind', 'Express', 'Prisma', 'PostgreSQL', 'Cloudinary'],
+    shots: [['b2b-1', 'Admin dashboard'], ['b2b-2', 'Products'], ['b2b-3', 'Orders'], ['b2b-4', 'Shop sign in']],
+  },
+  {
+    id: 'courses', name: 'Courses Platform', ar: 'منصة تدريب', field: 'data', year: '2026',
+    status: ['built', 'Built'], url: 'courses / admin',
+    what: 'A learning management system for companies, in English and Arabic.',
+    summary: 'Companies assign courses to their staff and follow progress. Instructors build courses with lessons and quizzes, learners earn verifiable certificates, and admins see completion across the organization.',
+    points: [
+      'Admin, instructor, assistant and learner roles',
+      'Course builder with lessons, quizzes and assignments',
+      'Certificates with a public verification page',
+      'Progress, bookmarks, notes, ratings and points',
+      'Analytics and an audit log',
+    ],
+    stack: ['React', 'Vite', 'Tailwind', 'NestJS', 'TypeORM', 'PostgreSQL', 'Redis'],
+    shots: [['courses-1', 'Admin dashboard'], ['courses-2', 'Course management'], ['courses-3', 'Analytics'], ['courses-4', 'Sign in']],
+  },
+];
+
+// Smaller or in-progress work, without screens.
+const MORE = [
+  { name: 'TopUp Platform', field: 'sales', status: ['wip', 'In development'], text: 'A white-label store for game top-ups, gift cards and app coins. Customers pay from a prepaid wallet, prices change by customer level, and orders are delivered through supplier APIs or an encrypted code stock.', stack: ['Next.js', 'Express', 'Worker', 'PostgreSQL', 'Redis'] },
+  { name: 'Arabiyti', field: 'data', status: ['wip', 'In development'], text: 'A car-care app for owners in Egypt. Snap a workshop receipt or record a voice note in Egyptian Arabic, and AI drafts the service record and predicts what the car needs next.', stack: ['Expo', 'Express', 'Prisma', 'PostgreSQL', 'AI'] },
+  { name: 'Real-time Chatrooms API', field: 'data', status: ['built', 'API'], text: 'Chat rooms over WebSockets with JWT sign-in, message history and Redis for presence and fan-out.', stack: ['Fastify', 'Socket.IO', 'Redis', 'Prisma'] },
+  { name: 'Hero Leaderboard', field: 'data', status: ['built', 'API'], text: 'A score API with Redis sorted sets for instant ranking, a score log in Postgres and a small dashboard.', stack: ['Fastify', 'Redis', 'Prisma', 'Next.js'] },
+  { name: 'TaskFlow API', field: 'data', status: ['built', 'API'], text: 'A secure REST API for personal tasks: sign-up and sign-in, validation and per-user data.', stack: ['Express', 'Prisma', 'PostgreSQL'] },
+];
+
+// Projects with a working in-browser demo, and the people you can switch between inside it
+const DEMOS = {
+  clinic: [['owner', 'Doctor'], ['assistant', 'Reception'], ['patient', 'Patient'], ['guest', 'Visitor']],
+  dewan: [['admin', 'Accountant']],
+  blogify: [['guest', 'Reader'], ['admin', 'Admin dashboard']],
+  hardware: [],
+  reptracker: [['admin', 'Sales manager']],
+  erp: [['admin', 'Admin']],
+  b2b: [['customer', 'Shop'], ['admin', 'Distributor']],
+  courses: [['admin', 'Admin']],
+};
+const SECTORS = [['عيادات', 'clinics'], ['موزعين', 'distributors'], ['محاسبين', 'accountants'], ['مستوردين', 'importers'], ['ناشرين', 'publishers'], ['مندوبين', 'field sales teams']];
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const arNum = (n) => String(n).padStart(2, '0').replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
+const pill = ([k, l]) => `<span class="pill ${k}">${esc(l)}</span>`;
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── Theme ──
+const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* unavailable */ } } };
+if (store.get('theme')) document.documentElement.dataset.theme = store.get('theme');
+$('#themeBtn').onclick = () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+  store.set('theme', document.documentElement.dataset.theme);
+};
+
+// ── Cairo clock ──
+const tick = () => { $('#clock').textContent = new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit' }).format(new Date()); };
+tick(); setInterval(tick, 20000);
+$('#yr').textContent = new Date().getFullYear();
+
+// ── Rotating sector word ──
+let si = 0;
+const word = $('#word');
+const showSector = (first) => {
+  const [ar, en] = SECTORS[si];
+  const old = word.querySelector('span:not(.out)');
+  const s = document.createElement('span'); s.textContent = ar; s.className = first || calm ? '' : 'in';
+  word.appendChild(s);
+  if (old) { old.classList.add('out'); setTimeout(() => old.remove(), 800); }
+  requestAnimationFrame(() => requestAnimationFrame(() => s.classList.remove('in')));
+  setTimeout(() => { $('#wordCap').innerHTML = `for <b>${en}</b>`; }, first || calm ? 0 : 350);
+};
+showSector(true);
+if (!calm) setInterval(() => { si = (si + 1) % SECTORS.length; showSector(); }, 2600);
+
+// ── Stats that count up ──
+const facts = [
+  [PROJECTS.length, 'systems shown'],
+  [PROJECTS.filter((p) => p.status[0] === 'live').length, 'in use by clients'],
+  [Object.keys(DEMOS).length, 'live demos to try'],
+  [PROJECTS.reduce((n, p) => n + p.shots.length, 0), 'real screens'],
+];
+$('#stats').innerHTML = facts.map(([n, l]) => `<div><b data-n="${n}">${calm ? n : 0}</b><span class="mono">${l}</span></div>`).join('');
+const countUp = () => document.querySelectorAll('#stats b').forEach((b) => {
+  const n = +b.dataset.n; let t0;
+  const step = (t) => { t0 ??= t; const k = Math.min(1, (t - t0) / 1100); b.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+});
+if (!calm) setTimeout(countUp, 300);
+
+// ── Ticker of every technology used ──
+const tech = [...new Set(PROJECTS.concat(MORE).flatMap((p) => p.stack))];
+$('#ticker').innerHTML = tech.concat(tech).map((t) => `<span>${esc(t)}</span>`).join('');
+
+// ── Work list ──
+$('#workCount').textContent = arNum(PROJECTS.length);
+$('#list').innerHTML = PROJECTS.map((p, i) => `
+  <li data-field="${p.field}">
+    <button class="row" type="button" data-i="${i}" aria-current="false">
+      <span class="n">${arNum(i + 1)}</span>
+      <span class="t">${esc(p.name)}</span>
+      <span class="tag">${DEMOS[p.id] ? '<span class="pill play">Live demo</span>' : ''}${pill(p.status)}</span>
+      <span class="a"><span class="ar">${esc(p.ar)}</span> · ${FIELDS[p.field]}</span>
+      <span class="thumb"><img src="img/${p.shots.find((s) => !s[2])?.[0] || p.shots[0][0]}.jpg" alt="" loading="lazy"></span>
+    </button>
+  </li>`).join('');
+const counts = PROJECTS.reduce((m, p) => ((m[p.field] = (m[p.field] || 0) + 1), m), {});
+$('#filters').innerHTML = [['all', 'All', PROJECTS.length], ...Object.entries(FIELDS).filter(([k]) => counts[k]).map(([k, v]) => [k, v, counts[k]])]
+  .map(([k, v, n]) => `<button class="chip" type="button" data-f="${k}" aria-pressed="${k === 'all'}">${esc(v)}<small>${n}</small></button>`).join('');
+$('#filters').onclick = (e) => {
+  const b = e.target.closest('[data-f]'); if (!b) return;
+  document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', c === b));
+  document.querySelectorAll('#list li').forEach((li) => li.classList.toggle('hide', b.dataset.f !== 'all' && li.dataset.field !== b.dataset.f));
+  const first = document.querySelector('#list li:not(.hide) .row'); if (first) preview(+first.dataset.i);
+};
+
+// ── Stage: preview of the hovered project, cycling through its screens ──
+let cur = -1, timer = null;
+const stageScreen = $('#stageScreen');
+const playShots = (p, k) => {
+  clearTimeout(timer);
+  const imgs = stageScreen.querySelectorAll('img');
+  imgs.forEach((im, j) => im.classList.toggle('on', j === k));
+  $('#stageCap').textContent = `${k + 1} / ${p.shots.length} · ${p.shots[k][1]}`;
+  stageProg.querySelectorAll('i').forEach((bar, j) => { bar.className = j < k ? 'done' : j === k ? 'run' : ''; });
+  if (!calm) timer = setTimeout(() => playShots(p, (k + 1) % p.shots.length), 2800);
+};
+const stageProg = $('#stageProg');
+function preview(i) {
+  if (i === cur) return; cur = i;
+  const p = PROJECTS[i];
+  document.querySelectorAll('.row').forEach((r) => r.setAttribute('aria-current', +r.dataset.i === i));
+  $('#stageUrl').textContent = p.url;
+  stageScreen.innerHTML = p.shots.map(([s, c, ph]) => `<img src="img/${s}.jpg" alt="${esc(c)}"${ph ? ' class="phone"' : ''}>`).join('');
+  stageProg.innerHTML = p.shots.map(() => '<i><b></b></i>').join('');
+  $('#stageWhat').textContent = p.what;
+  $('#stageOpen').textContent = DEMOS[p.id] ? 'Click to try it ↗' : 'Click to see the screens';
+  requestAnimationFrame(() => playShots(p, 0));
+}
+const list = $('#list');
+list.addEventListener('mouseover', (e) => { const r = e.target.closest('.row'); if (r) preview(+r.dataset.i); });
+list.addEventListener('focusin', (e) => { const r = e.target.closest('.row'); if (r) preview(+r.dataset.i); });
+list.addEventListener('click', (e) => { const r = e.target.closest('.row'); if (r) openCase(+r.dataset.i); });
+$('#stage').addEventListener('click', () => cur >= 0 && openCase(cur));
+$('#stage').style.cursor = 'pointer';
+// Gentle tilt toward the pointer
+const frame = $('#frame');
+$('#stage').addEventListener('mousemove', (e) => {
+  if (calm) return;
+  const r = frame.getBoundingClientRect();
+  frame.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - .5) * 6}deg`);
+  frame.style.setProperty('--rx', `${-((e.clientY - r.top) / r.height - .5) * 5}deg`);
+});
+$('#stage').addEventListener('mouseleave', () => { frame.style.setProperty('--ry', '0deg'); frame.style.setProperty('--rx', '0deg'); });
+preview(0);
+
+// ── Also built ──
+$('#moreGrid').innerHTML = MORE.map((m) => `
+  <article class="mini rv">
+    ${pill(m.status)}
+    <h4>${esc(m.name)}</h4>
+    <p>${esc(m.text)}</p>
+    <div class="stack">${m.stack.map((s) => `<span>${esc(s)}</span>`).join('')}</div>
+  </article>`).join('');
+
+// ── Project view: live demo, screens, about ──
+const dlg = $('#case');
+let open = -1, tab = 'demo', shot = 0;
+function openCase(i, t) {
+  open = i; const p = PROJECTS[i];
+  const tabs = [DEMOS[p.id] && ['demo', 'Live demo'], ['shots', 'Screens'], ['about', 'About']].filter(Boolean);
+  $('#caseTitle').textContent = p.name;
+  $('#caseAr').textContent = p.ar;
+  $('#caseNum').textContent = `${String(i + 1).padStart(2, '0')} / ${String(PROJECTS.length).padStart(2, '0')}`;
+  $('#caseTabs').innerHTML = tabs.map(([k, l]) => `<button type="button" role="tab" data-t="${k}">${l}</button>`).join('');
+  $('#about').innerHTML = `
+    <div><p class="summary">${esc(p.summary)}</p>
+      <h3>Status</h3>${pill(p.status)} <span class="mono" style="margin-inline-start:8px">${FIELDS[p.field]} · ${p.year}</span>
+      <h3>Built with</h3><div class="stack">${p.stack.map((s) => `<span>${esc(s)}</span>`).join('')}</div></div>
+    <div><h3 style="margin-top:0">What it does</h3><ul>${p.points.map((t, k) => `<li><b>${arNum(k + 1)}</b>${esc(t)}</li>`).join('')}</ul></div>`;
+  $('#thumbs').innerHTML = p.shots.map(([s, c], k) => `<button type="button" data-k="${k}" aria-label="${esc(c)}"><img src="img/${s}.jpg" alt="" loading="lazy"></button>`).join('');
+  $('#shotScreen').innerHTML = p.shots.map(([s, c, ph]) => `<img src="img/${s}.jpg" alt="${esc(p.name)}: ${esc(c)}"${ph ? ' class="phone"' : ''}>`).join('');
+  $('#shotUrl').textContent = p.url;
+  $('#demoFrame').innerHTML = '<div class="loading">Loading the demo…</div>';
+  shot = 0; showShot(0);
+  history.replaceState(null, '', `#${p.id}`);
+  if (!dlg.open) { dlg.showModal(); document.body.style.overflow = 'hidden'; }
+  setTab(t && tabs.some(([k]) => k === t) ? t : tabs[0][0]);
+}
+function setTab(t) {
+  tab = t;
+  document.querySelectorAll('#caseTabs button').forEach((b) => b.setAttribute('aria-selected', b.dataset.t === t));
+  ['demo', 'shots', 'about'].forEach((k) => { $(`#pane-${k}`).hidden = k !== t; });
+  if (t === 'demo') loadDemo();
+}
+$('#caseTabs').onclick = (e) => { const b = e.target.closest('[data-t]'); if (b) setTab(b.dataset.t); };
+
+// The demo runs in a frame; the role buttons switch the person you are signed in as
+function loadDemo() {
+  const p = PROJECTS[open], roles = DEMOS[p.id];
+  const holder = $('#demoFrame');
+  $('#demoFull').href = `demos/${p.id}/index.html`;
+  $('#roleLbl').textContent = roles.length > 1 ? 'View as' : roles.length ? 'Signed in as' : 'Public site';
+  $('#roles').innerHTML = roles.map(([id, l]) => `<button class="role" type="button" data-r="${id}" aria-pressed="${roles.length === 1}">${esc(l)}</button>`).join('');
+  if (holder.querySelector('iframe')) return;
+  const f = document.createElement('iframe');
+  f.title = `${p.name} demo`;
+  f.src = `demos/${p.id}/index.html`;
+  f.onload = () => {
+    holder.querySelector('.loading')?.remove();
+    const D = f.contentWindow.DEMO; if (!D) return;
+    // Apps without a public side start signed in as their first person; the others start where a visitor lands
+    if (roles.length && !roles.some(([id]) => id === 'guest') && !f.dataset.signed) { f.dataset.signed = 1; D.signIn(roles[0][0]); return; }
+    markRole(D.role);
+  };
+  holder.appendChild(f);
+}
+const markRole = (r) => document.querySelectorAll('#roles .role').forEach((b) => b.setAttribute('aria-pressed', b.dataset.r === r));
+$('#roles').onclick = (e) => {
+  const b = e.target.closest('[data-r]'); const f = $('#demoFrame iframe');
+  if (!b || !f?.contentWindow.DEMO) return;
+  markRole(b.dataset.r); f.contentWindow.DEMO.signIn(b.dataset.r);
+};
+$('#demoReset').onclick = () => { const f = $('#demoFrame iframe'); f?.contentWindow.DEMO?.reset(); toast('Demo data reset'); };
+
+function showShot(k) {
+  const p = PROJECTS[open]; shot = (k + p.shots.length) % p.shots.length;
+  $('#shotScreen').querySelectorAll('img').forEach((im, j) => im.classList.toggle('on', j === shot));
+  $('#thumbs').querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', j === shot));
+  $('#shotCap').textContent = p.shots[shot][1];
+  $('#shotNum').textContent = `${shot + 1} / ${p.shots.length}`;
+}
+$('#thumbs').onclick = (e) => { const b = e.target.closest('[data-k]'); if (b) showShot(+b.dataset.k); };
+$('#shotPrev').onclick = () => showShot(shot - 1);
+$('#shotNext').onclick = () => showShot(shot + 1);
+$('#casePrev').onclick = () => openCase((open - 1 + PROJECTS.length) % PROJECTS.length, tab);
+$('#caseNext').onclick = () => openCase((open + 1) % PROJECTS.length, tab);
+const closeCase = () => { dlg.close(); };
+$('#caseClose').onclick = closeCase;
+dlg.addEventListener('close', () => { document.body.style.overflow = ''; $('#demoFrame').innerHTML = ''; history.replaceState(null, '', '#work'); open = -1; });
+dlg.addEventListener('keydown', (e) => {
+  if (tab !== 'shots' || e.target.closest('input, textarea')) return;
+  if (e.key === 'ArrowLeft') showShot(shot - 1);
+  if (e.key === 'ArrowRight') showShot(shot + 1);
+});
+
+// Deep link: #dewan opens that project
+const fromHash = () => { const i = PROJECTS.findIndex((p) => `#${p.id}` === location.hash); if (i >= 0) openCase(i); };
+fromHash();
+addEventListener('hashchange', fromHash);
+
+// ── Contact ──
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1800); }
+$('#copyMail').onclick = async () => {
+  const mail = 'moataz.elnaggar01@gmail.com';
+  try { await navigator.clipboard.writeText(mail); toast('Email copied'); } catch { location.href = `mailto:${mail}`; }
+};
+
+// ── Reveal on scroll ──
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>

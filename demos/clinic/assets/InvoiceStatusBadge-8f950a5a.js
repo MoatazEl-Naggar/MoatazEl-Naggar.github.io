@@ -1,0 +1,1 @@
+import{j as t,a5 as n}from"./index-0d57c729.js";function i({status:s}){const e=n[s]||n.unpaid;return t.jsx("span",{className:`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-medium leading-none ${e.className}`,children:e.label})}export{i as I};
