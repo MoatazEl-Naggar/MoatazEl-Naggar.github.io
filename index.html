@@ -211,6 +211,11 @@ dialog.case::backdrop { background: rgba(0, 0, 0, .4); }
 .about li { padding: 12px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 34px 1fr; color: var(--ink-2); }
 .about li b { font: 700 15px var(--kufi); color: var(--hot); }
 .about h3 { font: 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 30px 0 10px; }
+.share { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: start; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.share img { width: 120px; border-radius: 8px; border: 1px solid var(--line); }
+.share p { margin: 0 0 10px; font-size: 14px; color: var(--ink-2); }
+.share .dl { display: flex; flex-wrap: wrap; gap: 8px; }
+.share .btn { padding: 8px 14px; font-size: 14px; }
 
 /* ── Reveal on scroll ── */
 .rv { opacity: 0; transform: translateY(24px); transition: opacity .8s, transform .8s cubic-bezier(.2, .8, .2, 1); }
@@ -351,6 +356,7 @@ dialog.case::backdrop { background: rgba(0, 0, 0, .4); }
         <span class="lbl" id="roleLbl">View as</span><span id="roles" style="display:contents"></span>
         <button class="ghost" type="button" id="demoReset">Reset</button>
         <a id="demoFull" target="_blank" rel="noopener">Full screen ↗</a>
+        <a id="demoBrochure" target="_blank" rel="noopener">Brochure PDF ↓</a>
         <span class="note">Runs in your browser on demo data. Nothing is saved.</span>
       </div>
       <div class="demo-frame" id="demoFrame"><div class="loading">Loading the demo…</div></div>
@@ -703,7 +709,11 @@ function openCase(i, t) {
   $('#about').innerHTML = `
     <div><p class="summary">${esc(p.summary)}</p>
       <h3>Status</h3>${pill(p.status)} <span class="mono" style="margin-inline-start:8px">${FIELDS[p.field]} · ${p.year}</span>
-      <h3>Built with</h3><div class="stack">${p.stack.map((s) => `<span>${esc(s)}</span>`).join('')}</div></div>
+      <h3>Built with</h3><div class="stack">${p.stack.map((s) => `<span>${esc(s)}</span>`).join('')}</div>
+      <h3>Brochure &amp; share post</h3>
+      <div class="share"><img src="brochures/${p.id}/${p.id}-post.png" alt="Share post for ${esc(p.name)}" loading="lazy">
+        <div><p>An Arabic brochure and a ready-to-post image for this project, without prices.</p>
+        <div class="dl"><a class="btn solid" href="brochures/${p.id}/${p.id}-brochure.pdf" target="_blank" rel="noopener">Brochure PDF ↓</a><a class="btn" href="brochures/${p.id}/${p.id}-post.png" download>Post image ↓</a><button class="btn" type="button" data-share="${p.id}">Share…</button></div></div></div></div>
     <div><h3 style="margin-top:0">What it does</h3><ul>${p.points.map((t, k) => `<li><b>${arNum(k + 1)}</b>${esc(t)}</li>`).join('')}</ul></div>`;
   $('#thumbs').innerHTML = p.shots.map(([s, c], k) => `<button type="button" data-k="${k}" aria-label="${esc(c)}"><img src="img/${s}.jpg" alt="" loading="lazy"></button>`).join('');
   $('#shotScreen').innerHTML = p.shots.map(([s, c, ph]) => `<img src="img/${s}.jpg" alt="${esc(p.name)}: ${esc(c)}"${ph ? ' class="phone"' : ''}>`).join('');
@@ -727,6 +737,7 @@ function loadDemo() {
   const p = PROJECTS[open], roles = DEMOS[p.id];
   const holder = $('#demoFrame');
   $('#demoFull').href = `demos/${p.id}/index.html`;
+  $('#demoBrochure').href = `brochures/${p.id}/${p.id}-brochure.pdf`;
   $('#roleLbl').textContent = roles.length > 1 ? 'View as' : roles.length ? 'Signed in as' : 'Public site';
   $('#roles').innerHTML = roles.map(([id, l]) => `<button class="role" type="button" data-r="${id}" aria-pressed="${roles.length === 1}">${esc(l)}</button>`).join('');
   if (holder.querySelector('iframe')) return;
@@ -775,6 +786,19 @@ dlg.addEventListener('keydown', (e) => {
 const fromHash = () => { const i = PROJECTS.findIndex((p) => `#${p.id}` === location.hash); if (i >= 0) openCase(i); };
 fromHash();
 addEventListener('hashchange', fromHash);
+
+// Share a project's post image (phones share the picture itself; elsewhere the project link is copied)
+$('#about').addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-share]'); if (!b) return;
+  const p = PROJECTS.find((x) => x.id === b.dataset.share);
+  const url = `${location.origin}${location.pathname}#${p.id}`;
+  try {
+    const blob = await (await fetch(`brochures/${p.id}/${p.id}-post.png`)).blob();
+    const file = new File([blob], `${p.id}.png`, { type: 'image/png' });
+    if (navigator.canShare?.({ files: [file] })) { await navigator.share({ files: [file], title: p.name, text: `${p.what} ${url}` }); return; }
+  } catch (err) { if (err.name === 'AbortError') return; }
+  try { await navigator.clipboard.writeText(url); toast('Project link copied'); } catch { toast(url); }
+});
 
 // ── Contact ──
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 1800); }
